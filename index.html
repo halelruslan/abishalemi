@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Әбіш әлемі - Ғылыми-әдеби портал</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- QRCode.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .serif-font {
+            font-family: 'Merriweather', serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e293b 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-amber-500/20 border border-amber-500/40 rounded-xl text-amber-400">
+                        <i data-lucide="book-open" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold tracking-tight serif-font text-amber-400">ӘБІШ ӘЛЕМІ</span>
+                        <span class="block text-xs text-slate-400 tracking-wider uppercase">Ғылыми-әдеби білім беру порталы</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-1">
+                    <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+                        <i data-lucide="user" class="w-4 h-4"></i> Жазушы туралы
+                    </button>
+                    <button onclick="switchTab('base')" id="nav-base" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+                        <i data-lucide="library" class="w-4 h-4"></i> Ғылыми база
+                    </button>
+                    <button onclick="switchTab('interactive')" id="nav-interactive" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+                        <i data-lucide="qr-code" class="w-4 h-4"></i> Интерактив & QR
+                    </button>
+                    <button onclick="switchTab('education')" id="nav-education" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-4 h-4"></i> Білім беру ресурсы
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-900 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchTab('about'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800">Жазушы туралы</button>
+            <button onclick="switchTab('base'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800">Ғылыми база</button>
+            <button onclick="switchTab('interactive'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800">Интерактив & QR</button>
+            <button onclick="switchTab('education'); toggleMobileMenu();" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800">Білім беру ресурсы</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow">
+
+        <!-- HERO BANNER (Global) -->
+        <section class="hero-gradient text-white py-12 lg:py-16 border-b border-slate-800 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold tracking-wide">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> ҰЛТТЫҚ БОЛМЫС ТАМЫРЫ
+                        </div>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold serif-font leading-tight text-white">
+                            Әбіш Кекілбаев: <span class="text-amber-400">Ұлттық прозаның заңғар биігі</span>
+                        </h1>
+                        <blockquote class="italic text-slate-300 border-l-4 border-amber-500 pl-4 py-1 text-sm sm:text-base serif-font">
+                            «Адамды адам еткен — кітап, адамды адам ете беретін де — кітап.»
+                        </blockquote>
+                        <div class="pt-2 flex flex-wrap gap-4 text-xs sm:text-sm text-slate-300">
+                            <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                                <i data-lucide="award" class="w-4 h-4 text-amber-400"></i> Қазақстанның Еңбек Ері
+                            </span>
+                            <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                                <i data-lucide="book" class="w-4 h-4 text-amber-400"></i> Халық жазушысы
+                            </span>
+                            <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                                <i data-lucide="globe" class="w-4 h-4 text-amber-400"></i> Мемлекеттік қайраткер
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Quick Stats -->
+                    <div class="lg:col-span-4 bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl p-6 grid grid-cols-2 gap-4">
+                        <div class="text-center p-3 bg-slate-900/60 rounded-xl border border-slate-700/50">
+                            <div class="text-2xl font-bold text-amber-400">50+</div>
+                            <div class="text-xs text-slate-400 mt-1">Ғылыми талдаулар</div>
+                        </div>
+                        <div class="text-center p-3 bg-slate-900/60 rounded-xl border border-slate-700/50">
+                            <div class="text-2xl font-bold text-blue-400">100%</div>
+                            <div class="text-xs text-slate-400 mt-1">Цифрлық формат</div>
+                        </div>
+                        <div class="text-center p-3 bg-slate-900/60 rounded-xl border border-slate-700/50">
+                            <div class="text-2xl font-bold text-emerald-400">20+</div>
+                            <div class="text-xs text-slate-400 mt-1">QR Кітаптар</div>
+                        </div>
+                        <div class="text-center p-3 bg-slate-900/60 rounded-xl border border-slate-700/50">
+                            <div class="text-2xl font-bold text-purple-400">КТ/ҰБТ</div>
+                            <div class="text-xs text-slate-400 mt-1">Дайындық материалы</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTIONS CONTENT -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+            <!-- TAB 1: Жазушы туралы (About) -->
+            <section id="tab-about" class="tab-content space-y-10">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Bio Overview -->
+                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
+                        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                            <i data-lucide="user-check" class="w-6 h-6 text-blue-600"></i>
+                            <h2 class="text-2xl font-bold text-slate-900 serif-font">Өмірбаяны мен Мұрасы</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">
+                            <strong>Әбіш Кекілбайұлы</strong> (1939–2015) — Қазақстанның Еңбек Ері, Қазақстанның халық жазушысы, Мемлекеттік сыйлықтың лауреаты, көрнекті мемлекет және қоғам қайраткері. Маңғыстау облысы, Онды ауылында дүниеге келген.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed">
+                            Оның прозасы — ұлттық психологияны, тарихи жад пен философиялық тереңдікті айшықтайтын ерекше құбылыс. Жазушы өз шығармаларында тарихтың бұралаң жолдарындағы ұлт тағдырын, адамның ішкі ар-ождан драматизмін шебер суреттеді.
+                        </p>
+
+                        <h3 class="text-lg font-bold text-slate-900 pt-2 flex items-center gap-2">
+                            <i data-lucide="layers" class="w-5 h-5 text-amber-500"></i> Шығармашылық жолының кезеңдері
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                                <div class="font-bold text-blue-600 w-24 shrink-0">1960-1970 жж.</div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800">Поэзия және алғашқы проза</h4>
+                                    <p class="text-xs text-slate-600 mt-1">«Алтын шуақ» өлеңдер жинағы мен «Бір шоқ гүл» әңгімелер жинағы жарық көрді.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                                <div class="font-bold text-blue-600 w-24 shrink-0">1970-1980 жж.</div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800">Тарихи және философиялық повестер</h4>
+                                    <p class="text-xs text-slate-600 mt-1">«Күй», «Ханша-дәрия хикаясы», «Аңыздың ақыры» рованы арқылы кеңінен танымал болды.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                                <div class="font-bold text-blue-600 w-24 shrink-0">1980-1990 жж.</div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800">Тарихи дилогия «Үркер» мен «Елең-алаң»</h4>
+                                    <p class="text-xs text-slate-600 mt-1">Қазақ халқының XVIII ғасырдағы күрделі тарихи кезеңіне арналған эпикалық туындылар.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Timeline / Highlights -->
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 shadow-md border border-slate-700">
+                            <h3 class="text-lg font-bold text-amber-400 mb-4 flex items-center gap-2 serif-font">
+                                <i data-lucide="compass" class="w-5 h-5"></i> Ұлттық болмыс тұжырымдамасы
+                            </h3>
+                            <ul class="space-y-3 text-sm text-slate-300">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                    <span>Тарихи таным мен ұлттық кодты жаңғырту.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                    <span>Гуманизм, ар-ождан және адамгершілік философиясы.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+                                    <span>Дәстүрлі мәдениет пен заманауи өркениет сабақтастығы.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Quote Card -->
+                        <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+                            <i data-lucide="quote" class="w-8 h-8 text-amber-500 mb-2"></i>
+                            <p class="text-slate-700 text-sm italic serif-font">
+                                «Өз тарихын білмеген халықтың болашағы бұлыңғыр. Әдебиет — халықтың рухани жады мен айнасы.»
+                            </p>
+                            <span class="block text-right text-xs font-bold text-slate-800 mt-3">— Әбіш Кекілбаев</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Ғылыми база (Scientific Base) -->
+            <section id="tab-base" class="tab-content space-y-8 hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900 serif-font">Ғылыми-әдеби талдаулар базасы</h2>
+                        <p class="text-sm text-slate-500 mt-1">Жазушы шығармаларына жасалған терең идеялық-көркемдік және этнографиялық талдаулар</p>
+                    </div>
+                    <!-- Search & Filter -->
+                    <div class="flex gap-2">
+                        <input type="text" id="searchInput" onkeyup="filterWorks()" placeholder="Шығарманы немесе тақырыпты іздеу..." class="px-4 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-64">
+                    </div>
+                </div>
+
+                <!-- Cards Grid -->
+                <div id="worksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Work 1 -->
+                    <div class="work-card bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-md border border-blue-200">Тарихи роман</span>
+                                <span class="text-xs text-slate-400">1981 жыл</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 serif-font mb-2">«Үркер»</h3>
+                            <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+                                Қазақ халқының Әбілқайыр хан тұсындағы ресейлік протекторатты қабылдау кезеңіндегі күрделі геосаяси жағдайы мен ұлттық бірігу идеясы.
+                            </p>
+                            <div class="space-y-2 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                                <div><strong>Негізгі идея:</strong> Ел бірлігі, мемлекеттілік пен дербестік.</div>
+                                <div><strong>Кейіпкерлер:</strong> Әбілқайыр хан, Бөкенбай батыр, Тевкелев.</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+                            <button onclick="openModal('urker')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                                Толық талдауды оқу <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Work 2 -->
+                    <div class="work-card bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-md border border-amber-200">Психологиялық роман</span>
+                                <span class="text-xs text-slate-400">1979 жыл</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 serif-font mb-2">«Аңыздың ақыры»</h3>
+                            <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+                                Әмір Темір бейнесі арқылы шексіз билік пен тұлға трагедиясын, ар-ождан мен өнердің биліктен үстемдігін ашатын пәлсапалық шығарма.
+                            </p>
+                            <div class="space-y-2 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                                <div><strong>Негізгі идея:</strong> Билік пен өнер қақтығысы, жалғыздық.</div>
+                                <div><strong>Кейіпкерлер:</strong> Әмір Темір, Кіші ханым, Шебер.</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+                            <button onclick="openModal('anyz')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                                Толық талдауды оқу <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Work 3 -->
+                    <div class="work-card bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-md border border-emerald-200">Повест/Хикаят</span>
+                                <span class="text-xs text-slate-400">1968 жыл</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 serif-font mb-2">«Күй»</h3>
+                            <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+                                Түркпен мен қазақ арасындағы жауласу мен Дүйсенбай күйшінің өнері арқылы адамгершілік пен достықтың, өнер құдіретінің жеңісі.
+                            </p>
+                            <div class="space-y-2 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                                <div><strong>Негізгі идея:</strong> Өнердің құдіреті, гуманизм, ел татулығы.</div>
+                                <div><strong>Кейіпкерлер:</strong> Дүйсенбай күйші, Екей, Төремұрат.</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+                            <button onclick="openModal('kui')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                                Толық талдауды оқу <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Work 4 -->
+                    <div class="work-card bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-md border border-purple-200">Тарихи роман</span>
+                                <span class="text-xs text-slate-400">1984 жыл</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 serif-font mb-2">«Елең-алаң»</h3>
+                            <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+                                «Үркер» романының заңды жалғасы. XVIII ғасырдағы Қазақ хандығының ішкі-сыртқы қайшылықтары мен азаттық жолындағы күресі.
+                            </p>
+                            <div class="space-y-2 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                                <div><strong>Негізгі идея:</strong> Тарихи сабақтастық, дипломатия.</div>
+                                <div><strong>Кейіпкерлер:</strong> Әбілқайыр, Барақ султан, Төле би.</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+                            <button onclick="openModal('eleng')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                                Толық талдауды оқу <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Work 5 -->
+                    <div class="work-card bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-rose-50 text-rose-700 text-xs font-semibold rounded-md border border-rose-200">Хикаят</span>
+                                <span class="text-xs text-slate-400">1970 жыл</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 serif-font mb-2">«Ханша-дәрия хикаясы»</h3>
+                            <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+                                Шыңғыс ханның жорықтары, жаулап алушылық соғыстың қасіреті және адамгершілік пен махаббаттың тапталған тағдыры.
+                            </p>
+                            <div class="space-y-2 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                                <div><strong>Негізгі идея:</strong> Зұлымдыққа қарсылық, сұлулық пен махаббат.</div>
+                                <div><strong>Кейіпкерлер:</strong> Шыңғыс хан, Ханша, тұтқындар.</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+                            <button onclick="openModal('khansha')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                                Толық талдауды оқу <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Work 6 -->
+                    <div class="work-card bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 bg-teal-50 text-teal-700 text-xs font-semibold rounded-md border border-teal-200">Публицистика</span>
+                                <span class="text-xs text-slate-400">Әртүрлі жылдар</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 serif-font mb-2">«Заманмен сұхбат»</h3>
+                            <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+                                Жазушының ұлттық мәдениет, тіл, тарих, мемлекеттілік және жаһандану мәселелеріне арналған эсселері мен толғаулары.
+                            </p>
+                            <div class="space-y-2 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                                <div><strong>Негізгі идея:</strong> Рухани жаңғыру, отансүйгіштік.</div>
+                                <div><strong>Формат:</strong> Мақалалар, баяндамалар, эсселер.</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+                            <button onclick="openModal('zaman')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                                Толық талдауды оқу <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- TAB 3: Интерактив & QR (Interactive & Media) -->
+            <section id="tab-interactive" class="tab-content space-y-10 hidden">
+                <!-- QR Code Generator Section -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                    <div class="max-w-3xl mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 serif-font flex items-center gap-2">
+                            <i data-lucide="qr-code" class="w-7 h-7 text-amber-500"></i> Электронды кітаптар және QR Generator
+                        </h2>
+                        <p class="text-slate-600 text-sm mt-1">
+                            Төмендегі дайын шығармаларды таңдаңыз немесе өз сілтемеңізді қойып, сабақта/көрмеде пайдалану үшін жеке QR-код жасап алыңыз.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-7 space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Шығарманы таңдаңыз:</label>
+                                <select id="qrSelect" onchange="generateCustomQR()" class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 bg-white">
+                                    <option value="https://kitap.kz/book/urker-roman">«Үркер» романы (Толық нұсқа - Kitap.kz)</option>
+                                    <option value="https://kitap.kz/book/anyzdyn-aqyry">«Аңыздың ақыры» (Толық нұсқа)</option>
+                                    <option value="https://kitap.kz/book/kui">«Күй» хикаяты (Аудиокітап/Мәтін)</option>
+                                    <option value="https://kitap.kz/book/eleng-alan">«Елең-алаң» романы</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Немесе өз сілтемеңізді енгізіңіз:</label>
+                                <input type="text" id="qrInput" placeholder="https://..." oninput="generateCustomQR()" class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
+                                <p class="font-semibold text-slate-800">💡 Қалай пайдаланамыз?</p>
+                                <p>1. QR-кодты жүктеп алып, оқу бөлмесіне немесе презентацияға қойыңыз.</p>
+                                <p>2. Оқушылар смартфон камерасымен сканерлеп, кітапты бірден ұялы телефоннан оқи алады.</p>
+                            </div>
+                        </div>
+
+                        <!-- QR Output Box -->
+                        <div class="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-slate-900 rounded-2xl text-white">
+                            <div id="qrcode" class="bg-white p-4 rounded-xl shadow-inner mb-4"></div>
+                            <span class="text-xs text-slate-400 mb-3 text-center" id="qrTextDisplay">«Үркер» романына сілтеме</span>
+                            <button onclick="downloadQR()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-lg transition-all flex items-center gap-1.5">
+                                <i data-lucide="download" class="w-4 h-4"></i> QR-кодты жүктеп алу
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Lectures Section -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                    <h2 class="text-2xl font-bold text-slate-900 serif-font mb-6 flex items-center gap-2">
+                        <i data-lucide="video" class="w-6 h-6 text-red-500"></i> Бейнедәрістер мен Деректі фильмдер
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Video Item 1 -->
+                        <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between">
+                            <div class="relative bg-slate-900 aspect-video flex items-center justify-center group">
+                                <div class="text-center p-4">
+                                    <i data-lucide="play-circle" class="w-16 h-16 text-amber-400 mx-auto group-hover:scale-110 transition-transform cursor-pointer"></i>
+                                    <span class="block text-xs text-slate-300 mt-2 font-medium">Арнайы тележоба</span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Деректі фильм</span>
+                                <h3 class="font-bold text-slate-900 mt-1 text-base">«Әбіш Кекілбаев: Заманның заңғар тұлғасы»</h3>
+                                <p class="text-xs text-slate-500 mt-2">Жазушының өмірі, мемлекеттік қайраткерлігі және замандастарының естеліктері туралы бейнематериал.</p>
+                            </div>
+                        </div>
+
+                        <!-- Video Item 2 -->
+                        <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between">
+                            <div class="relative bg-slate-900 aspect-video flex items-center justify-center group">
+                                <div class="text-center p-4">
+                                    <i data-lucide="play-circle" class="w-16 h-16 text-amber-400 mx-auto group-hover:scale-110 transition-transform cursor-pointer"></i>
+                                    <span class="block text-xs text-slate-300 mt-2 font-medium">10 минуттық экспресс-дәріс</span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Әдеби талдау</span>
+                                <h3 class="font-bold text-slate-900 mt-1 text-base">«Үркер» мен «Елең-алаң» романдарындағы ұлттық идея</h3>
+                                <p class="text-xs text-slate-500 mt-2">Мектеп оқушылары мен студенттерге арналған тарихи дилогияның идеологиялық анализі.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: Білім беру ресурсы (Education) -->
+            <section id="tab-education" class="tab-content space-y-8 hidden">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
+                    <div class="border-b border-slate-100 pb-4">
+                        <h2 class="text-2xl font-bold text-slate-900 serif-font flex items-center gap-2">
+                            <i data-lucide="graduation-cap" class="w-7 h-7 text-blue-600"></i> Білім беру ресурстары & ҰБТ-ға дайындық
+                        </h2>
+                        <p class="text-slate-500 text-sm mt-1">Оқушыларға, студенттерге және мұғалімдерге арналған дидактикалық материалдар мен тесттер</p>
+                    </div>
+
+                    <!-- Comparative Table -->
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <i data-lucide="table" class="w-5 h-5 text-amber-500"></i> Шығармаларды салыстырмалы кесте арқылы оқу
+                        </h3>
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                            <table class="w-full text-left text-xs sm:text-sm text-slate-600">
+                                <thead class="bg-slate-100 text-slate-800 font-bold uppercase text-[11px] border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-3.5">Шығарма атауы</th>
+                                        <th class="p-3.5">Жанры</th>
+                                        <th class="p-3.5">Басты проблемасы</th>
+                                        <th class="p-3.5">Ұлттық болмыс көрінісі</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3.5 font-bold text-slate-900">«Үркер»</td>
+                                        <td class="p-3.5">Тарихи роман</td>
+                                        <td class="p-3.5">Қазақ елінің сыртқы жауларға қарсы бірлігі</td>
+                                        <td class="p-3.5">Елдік сана, дипломатия, шешендік өнер</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3.5 font-bold text-slate-900">«Аңыздың ақыры»</td>
+                                        <td class="p-3.5">Психологиялық роман</td>
+                                        <td class="p-3.5">Шексіз биліктің өнер мен тұлғаға әсері</td>
+                                        <td class="p-3.5">Сұлулық пен еркіндік философиясы</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3.5 font-bold text-slate-900">«Күй»</td>
+                                        <td class="p-3.5">Повест/Хикаят</td>
+                                        <td class="p-3.5">Жауласушы екі елдің гуманизм арқылы бітімге келуі</td>
+                                        <td class="p-3.5">Дәстүрлі күй өнері, қонақжайлылық, намыс</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Quiz Section -->
+                    <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-indigo-600"></i> Экспресс-тест: Бiлiмiңдi тексер!
+                            </h3>
+                            <span id="quizScore" class="text-xs font-bold px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full">Балл: 0/3</span>
+                        </div>
+
+                        <!-- Question 1 -->
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                            <p class="text-sm font-semibold text-slate-800">1. «Аңыздың ақыры» романындағы басты тарихи тұлға кім?</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                <button onclick="checkAnswer(this, false, 'q1')" class="q1-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">А) Абылай хан</button>
+                                <button onclick="checkAnswer(this, true, 'q1')" class="q1-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">Ә) Әмір Темір</button>
+                                <button onclick="checkAnswer(this, false, 'q1')" class="q1-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">Б) Әбілқайыр хан</button>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                            <p class="text-sm font-semibold text-slate-800">2. Әбіш Кекілбаевтың XVIII ғасырдағы Қазақ елінің тарихына арналған дилогиясы қайсысы?</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                <button onclick="checkAnswer(this, true, 'q2')" class="q2-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">А) «Үркер» және «Елең-алаң»</button>
+                                <button onclick="checkAnswer(this, false, 'q2')" class="q2-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">Ә) «Күй» және «Ханша-дәрия»</button>
+                                <button onclick="checkAnswer(this, false, 'q2')" class="q2-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">Б) «Көшпенділер» және «Жанталас»</button>
+                            </div>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                            <p class="text-sm font-semibold text-slate-800">3. «Күй» повестіндегі негізгі өнер иесі бейнесі:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                <button onclick="checkAnswer(this, false, 'q3')" class="q3-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">А) Құрманғазы</button>
+                                <button onclick="checkAnswer(this, false, 'q3')" class="q3-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">Ә) Тәттімбет</button>
+                                <button onclick="checkAnswer(this, true, 'q3')" class="q3-btn p-2.5 rounded-lg border border-slate-200 text-left hover:bg-slate-50">Б) Дүйсенбай</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- MODAL FOR DETAILED WORK ANALYSIS -->
+    <div id="analysisModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <div class="p-6 bg-slate-900 text-white flex items-center justify-between">
+                <div>
+                    <span id="modalCategory" class="text-xs font-bold text-amber-400 uppercase tracking-wider">Шығарма талдауы</span>
+                    <h3 id="modalTitle" class="text-2xl font-bold serif-font mt-0.5">Шығарма атауы</h3>
+                </div>
+                <button onclick="closeModal()" class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="modalContent" class="p-6 overflow-y-auto space-y-4 text-sm text-slate-600 custom-scrollbar leading-relaxed">
+                <!-- Dynamic Content injected by JS -->
+            </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center text-xs">
+                <span class="text-slate-500">«Әбіш әлемі» ғылыми-әдеби қоры</span>
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-white font-semibold rounded-lg hover:bg-slate-700">Жабу</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <i data-lucide="book-open" class="w-5 h-5 text-amber-400"></i>
+                <span class="font-bold text-white text-sm serif-font">«Әбіш әлемі»</span>
+                <span>— Танымдық және білім беру веб-платформасы</span>
+            </div>
+            <p>© 2026 Барлық құқықтар қорғалған. Қазақ әдебиетін цифрландыру жобасы.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Modal analysis data store
+        const worksData = {
+            urker: {
+                title: "«Үркер» романы",
+                category: "Тарихи роман / 1981 ж.",
+                content: `
+                    <h4 class="font-bold text-slate-800 text-base">Шығарманың идеялық-көркемдік мазмұны:</h4>
+                    <p>«Үркер» романы — қазақ халқының XVIII ғасырдың бірінші жартысындағы күрделі геосаяси жағдайы мен ұлттық азаттық күресін суреттейтін кең тынысты эпикалық туынды.</p>
+                    <h4 class="font-bold text-slate-800 text-base pt-2">Негізгі концепциясы мен ұлттық болмыс:</h4>
+                    <p>Романда Әбілқайыр ханның Ресей империясының құрамына кіру шешімінің ішкі астары, қазақ ру-тайпаларының арасындағы алауыздық пен оны жеңу жолдары көрсетіледі. Жазушы хан бейнесін біржақты емес, саяси дипломат, ел тағдырын ойлаған күрделі тұлға ретінде ашады.</p>
+                    <h4 class="font-bold text-slate-800 text-base pt-2">Тілдік мен көркемдік ерекшелігі:</h4>
+                    <p>Шығармада этнографиялық детальдар, шешендік сөздер, дәстүрлі салт-сана кеңінен көрініс тапқан. Жібек жолы бойындағы халықтардың психологиясы терең талданады.</p>
+                `
+            },
+            anyz: {
+                title: "«Аңыздың ақыры» романы",
+                category: "Психологиялық роман / 1979 ж.",
+                content: `
+                    <h4 class="font-bold text-slate-800 text-base">Философиялық арқауы:</h4>
+                    <p>Романда әлемді титықтатқан Әмір Темірдің өмірінің соңғы кезеңіндегі рухани дағдарысы баяндалады. Тізе бүктірген әлемнің оған бақыт сыйлай алмауы, шексіз биліктің жалғыздыққа әкелетіндігі терең психологиялық параллельдер арқылы өріледі.</p>
+                    <h4 class="font-bold text-slate-800 text-base pt-2">Өнер мен Билік қақтығысы:</h4>
+                    <p>Минарет салған шебердің Кіші ханымға деген кіршіксіз махаббаты мен сұлулыққа ұмтылысы шексіз билеушінің зұлымдығынан үстем түседі. Шығарманың түпкі идеясы — өнер мен сұлулық мәңгілік, ал уақытша билік өткінші.</p>
+                `
+            },
+            kui: {
+                title: "«Күй» хикаяты",
+                category: "Повест / 1968 ж.",
+                content: `
+                    <h4 class="font-bold text-slate-800 text-base">Гуманизм және Өнер құдіреті:</h4>
+                    <p>Хикаятта қазақ пен түркпен арасындағы барымта мен соғыс, соның салдарынан тұтқынға түскен Дүйсенбай күйшінің тағдыры баяндалады.</p>
+                    <h4 class="font-bold text-slate-800 text-base pt-2">Символизм мен Ұлттық код:</h4>
+                    <p>Дүйсенбайдың қолындағы домбырасы мен одан төгілген күй жауласып отырған екі елдің жүрегін жібітіп, қаныпезер жауды да тәубесіне келтіреді. Күй — ұлттық жадтың, кешірім мен адамгершіліктің символы ретінде суреттеледі.</p>
+                `
+            },
+            eleng: {
+                title: "«Елең-алаң» романы",
+                category: "Тарихи роман / 1984 ж.",
+                content: `
+                    <h4 class="font-bold text-slate-800 text-base">Сюжеттік сабақтастық:</h4>
+                    <p>«Үркер» романының тікелей заңды жалғасы болып табылатын бұл туындыда XVIII ғасырдың ортасындағы Қазақ хандығының халықаралық майдандағы дипломатиялық күресі бейнеленеді.</p>
+                    <h4 class="font-bold text-slate-800 text-base pt-2">Тұлға және тарих:</h4>
+                    <p>Романда Төле би, Қазыбек би, Әбілқайыр мен Жолбарыс хан бейнелері арқылы қазақ мемлекеттілігінің сақталып қалу жолындағы саяси тартыстар жан-жақты көрсетілген.</p>
+                `
+            },
+            khansha: {
+                title: "«Ханша-дәрия хикаясы»",
+                category: "Хикаят / 1970 ж.",
+                content: `
+                    <h4 class="font-bold text-slate-800 text-base">Соғыс трагедиясы және Тағдыр:</h4>
+                    <p>Шыңғыс ханның танғұт елін жаулап алу жорығы мен Ханшаның трагедиялық тағдыры арқылы соғыстың адамзатқа әкелетін қасіреті баяндалады.</p>
+                    <p class="pt-2">Шығармада зұлымдық пен басып алушылықтың түбі күйреуге ұшырайтыны, махаббат пен еркіндікке ұмтылысты ешқандай қарумен тұншықтыру мүмкін еместігі дәйектеледі.</p>
+                `
+            },
+            zaman: {
+                title: "«Заманмен сұхбат» публицистикасы",
+                category: "Эсселер мен толғаулар",
+                content: `
+                    <h4 class="font-bold text-slate-800 text-base">Мемлекеттілік пен Мәдениет:</h4>
+                    <p>Әбіш Кекілбаевтың ойшыл-публицист ретіндегі мұрасы. Оның еңбектерінде ұлттық тіл, тарихи сабақтастық, тәуелсіздік мұраттары мен ғаламдық өркениетке интеграциялану мәселелері қозғалады.</p>
+                `
+            }
+        };
+
+        // QR Code Generator variable
+        let qrCodeObj = null;
+
+        // Initialize Lucide icons & QR code on load
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            generateCustomQR();
+        });
+
+        // Tab Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            // Style active nav button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-800', 'text-white');
+                btn.classList.add('text-slate-300');
+            });
+            const activeNav = document.getElementById('nav-' + tabId);
+            if(activeNav) {
+                activeNav.classList.add('bg-slate-800', 'text-white');
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Search Filter for Base Tab
+        function filterWorks() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.work-card');
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal Controls
+        function openModal(key) {
+            const data = worksData[key];
+            if (!data) return;
+
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalCategory').innerText = data.category;
+            document.getElementById('modalContent').innerHTML = data.content;
+            document.getElementById('analysisModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('analysisModal').classList.add('hidden');
+        }
+
+        // Dynamic QR Generator
+        function generateCustomQR() {
+            const selectVal = document.getElementById('qrSelect').value;
+            const inputVal = document.getElementById('qrInput').value.trim();
+            const finalUrl = inputVal !== "" ? inputVal : selectVal;
+
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = "";
+
+            qrCodeObj = new QRCode(qrContainer, {
+                text: finalUrl,
+                width: 140,
+                height: 140,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            const selectedText = document.getElementById('qrSelect').options[document.getElementById('qrSelect').selectedIndex].text;
+            document.getElementById('qrTextDisplay').innerText = inputVal ? "Еңгізілген сілтеме" : selectedText;
+        }
+
+        function downloadQR() {
+            const img = document.querySelector('#qrcode img');
+            if (img) {
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = 'Abish_Alem_QR.png';
+                link.click();
+            } else {
+                alert("QR код дайын емес!");
+            }
+        }
+
+        // Quiz Logic
+        let score = 0;
+        const answered = { q1: false, q2: false, q3: false };
+
+        function checkAnswer(button, isCorrect, qId) {
+            if (answered[qId]) return;
+
+            answered[qId] = true;
+            const buttons = document.querySelectorAll('.' + qId + '-btn');
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+            });
+
+            if (isCorrect) {
+                button.classList.remove('bg-white', 'opacity-60');
+                button.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-800', 'font-bold', 'opacity-100');
+                score++;
+            } else {
+                button.classList.remove('bg-white', 'opacity-60');
+                button.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-800', 'font-bold', 'opacity-100');
+            }
+
+            document.getElementById('quizScore').innerText = `Балл: ${score}/3`;
+        }
+    </script>
+</body>
+</html>
